@@ -9,12 +9,12 @@ if (!isset($_SESSION['unique_id'])) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style/style.css">
+  <link rel="stylesheet" href="style/chat.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
 </head>
 
-<body>
-  <div class="wrapper">
+<body class="outer-body">
+  <div class="chat-wrapper">
     <section class="chat-area">
       <header>
         <?php
@@ -26,7 +26,7 @@ if (!isset($_SESSION['unique_id'])) {
           header("location: users.php");
         }
         ?>
-        <a href="users.php" class="back-icon"><i class="fas fa-arrow-left"></i></a>
+        <!-- <a href="/message" class="back-icon"><i class="fas fa-arrow-left"></i></a> -->
         <img src="php/images/<?php echo $row['img']; ?>" alt="">
         <div class="details">
           <span><?php echo $row['fname'] . " " . $row['lname'] ?></span>

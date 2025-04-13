@@ -9,18 +9,18 @@
 }
 
 
-.home-container header{
+.home-container header {
     line-height: 40px;
     /* padding: 25px; */
     margin-bottom: 30px;
 }
 
-.search-car-container > .input-container:last-child {
+.search-car-container>.input-container:last-child {
     display: grid;
     place-items: center;
 }
 
-.home-container header h1{
+.home-container header h1 {
     font-size: 30px;
 }
 
@@ -39,9 +39,12 @@ form {
     min-width: 1500px;
     border: 1px solid #e5e7eb;
     background: #fff;
-    box-shadow: 1px 0px 5px rgba(249,250,251,255, 0.1), /* Very light shadow on left */
-                -1px 0px 5px rgba(249,250,251,255, 0.1), /* Very light shadow on right */
-                0px 5px 10px rgba(0, 0, 0, 0, 0.8); /* Soft bottom shadow */
+    box-shadow: 1px 0px 5px rgba(249, 250, 251, 255, 0.1),
+        /* Very light shadow on left */
+        -1px 0px 5px rgba(249, 250, 251, 255, 0.1),
+        /* Very light shadow on right */
+        0px 5px 10px rgba(0, 0, 0, 0, 0.8);
+    /* Soft bottom shadow */
 }
 
 .input-container {
@@ -75,3 +78,400 @@ form {
     opacity: 0.9;
 }
 
+/* My cars */
+
+.flex {
+    display: flex;
+    /* grid-template-columns: 300px 1000px; */
+    gap: 30px;
+}
+
+.profile-nav {
+    border-radius: 10px;
+    width: 300px;
+    height: max-content;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 30px;
+    box-shadow: 1px 0px 5px rgba(249, 250, 251, 255, 0.1),
+        /* Very light shadow on left */
+        -1px 0px 5px rgba(249, 250, 251, 255, 0.1),
+        /* Very light shadow on right */
+        0px 5px 10px rgba(0, 0, 0, 0, 0.8);
+    /* Soft bottom shadow */
+}
+
+.profile-nav .profile {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.profile-nav .profile p {
+    font-size: 20px;
+}
+
+.profile-nav .profile img {
+    height: 60px;
+    width: 60px;
+    border-radius: 30px;
+}
+
+.myCar {
+    position: relative;
+    width: 1000px;
+    min-height: 500px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 1px 0px 5px rgba(249, 250, 251, 255, 0.1),
+        /* Very light shadow on left */
+        -1px 0px 5px rgba(249, 250, 251, 255, 0.1),
+        /* Very light shadow on right */
+        0px 5px 10px rgba(0, 0, 0, 0, 0.8);
+    /* Soft bottom shadow */
+}
+
+.btn-box {
+    margin-top: 30px;
+    display: block;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btn.active {
+    background-color: #eff6ff;
+    color: #2054dc;
+}
+
+.btn:hover {
+    background-color: #f3f4f6;
+}
+
+.btn {
+    padding: 10px;
+    border: none;
+    background-color: white;
+    color: gray;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+.content_box {
+    flex-grow: 1;
+}
+
+.content {
+    display: none;
+    padding: 20px;
+}
+
+.content.active {
+    display: block;
+}
+
+.card {
+    width: 260px;
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    font-family: Arial, sans-serif;
+}
+
+.card h4 {
+    margin-bottom: 16px;
+    font-size: 16px;
+    color: #333;
+}
+
+.quick-link {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    color: #333;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.quick-link i {
+    margin-right: 10px;
+    color: #555;
+}
+
+.quick-link:last-child {
+    margin-bottom: 0;
+}
+
+.quick-link:hover {
+    color: #007bff;
+}
+
+/* My bookings */
+
+/* My Cars */
+
+.content_box .add-car {
+    position: absolute;
+    border: none;
+    background-color: #2054dc;
+    padding: 10px 15px;
+    color: white;
+    border-radius: 5px;
+    right: 20px;
+    top: 20px;
+    cursor: pointer;
+}
+
+/* Add listing */
+
+.add-form {
+    display: flex;
+    max-width: 760px;
+    flex-direction: column;
+    padding: 20px;
+    background: white;
+    box-shadow: 1px 0px 5px rgba(249, 250, 251, 255, 0.1),
+        -1px 0px 5px rgba(249, 250, 251, 255, 0.1),
+        0px 5px 10px rgba(0, 0, 0, 0, 0.8);
+}
+
+.add-form .input-container-grid {
+    display: grid;
+    grid-template-columns: 350px 350px;
+    gap: 20px;
+}
+
+.add-form .input-container-grid .input input {
+    width: 100%;
+    height: 40px;
+    border: 1px solid rgb(192, 185, 185);
+    border-radius: 5px;
+    padding: 20px;
+    outline: none;
+}
+
+.add-form .input-container-grid .input select {
+    width: 100%;
+    height: 40px;
+    border: 1px solid rgb(192, 185, 185);
+    border-radius: 5px;
+    padding: 8px 12px;
+    outline: none;
+}
+
+.add-form .input-container-grid .input span {
+    font-size: 10px;
+}
+
+.add-form .input-container-grid .input label {
+    font-size: 14px;
+}
+
+.listing-title {
+    display: flex;
+    flex-direction: column;
+}
+
+.listing-title .input {
+    width: 100%;
+}
+
+textarea {
+    width: 100%;
+    height: 120px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
+    resize: vertical;
+    box-sizing: border-box;
+}
+
+textarea:focus {
+    /* border-color: #4a90e2; */
+    /* border: none; */
+    outline: none;
+    box-shadow: 0 0 3px rgba(74, 144, 226, 0.5);
+}
+
+.listing-title .input label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: #333;
+}
+
+.flex-column h4 {
+    margin-bottom: 15px;
+}
+
+.flex-column .flex {
+    display: flex;
+    justify-content: space-between;
+    line-height: 30px;
+}
+
+.image-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.image-container {
+    position: relative;
+    width: 200px;
+    height: 150px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #dee2e6;
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.delete-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 1px solid #dee2e6;
+    font-size: 14px;
+    color: #495057;
+}
+
+.delete-btn:hover {
+    background-color: #f8f9fa;
+}
+
+.add-image-container {
+    width: 200px;
+    height: 150px;
+    border: 2px dashed #dee2e6;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background-color: white;
+}
+
+.add-image-container:hover {
+    border-color: #adb5bd;
+    background-color: #f8f9fa;
+}
+
+.add-icon {
+    font-size: 24px;
+    color: #adb5bd;
+    margin-bottom: 8px;
+}
+
+.add-text {
+    font-size: 14px;
+    color: #6c757d;
+}
+
+#file-input {
+    display: none;
+}
+
+.upload-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.upload-button:hover {
+    background-color: #0069d9;
+}
+
+.upload-count {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #6c757d;
+}
+
+#car-file-input {
+    display: none;
+}
+
+.car-uploader h4,
+.car-uploader p {
+    margin-bottom: 10px;
+}
+
+.car-uploader p {
+    font-size: 14px;
+}
+
+.tips {
+    background-color: #eff6ff;
+    padding: 20px 50px;
+    border-radius: 5px;
+    margin-top: 15px;
+    position: relative;
+}
+
+.tips i {
+    color: #2853da;
+    font-size: 20px;
+    position: absolute;
+    left: 20px;
+    top: 20px;
+}
+
+.tips h5 {
+    color: #2853da;
+    margin-bottom: 10px;
+}
+
+.tips li {
+    font-size: 13px;
+    margin-left: 15px;
+    margin-top: 5px;
+    color: #3775e0;
+}
+
+.tips li::marker {
+    color: #2853da;
+}
+
+input[type="checkbox"] {
+    transform: scale(1.2);
+    margin: 5px;
+}
+
+.submit {
+    width: 200px;
+    height: 50px;
+    border: none;
+    color: white;
+    background: #2853da;
+    border-radius: 5px;
+}
+
+.add-container {
+    margin-bottom: 15px;
+}

@@ -12,6 +12,7 @@ include_once "php/config.php";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Veehive</title>
     <link rel="stylesheet" href="style/navigation.css">
+    <link rel="stylesheet" href="style/user.css">
     <script src="javascript/router.js"></script>
 </head>
 
@@ -22,30 +23,14 @@ include_once "php/config.php";
                 <h1>Veehive</h1>
             </a>
         </div>
-        <ul id="menuList">
+        <ul class="relative" id="menuList">
             <li><a href="/" onclick="route()">Find Cars</a></li>
             <li><a href="/Cars" onclick="route()">List Your Car</a></li>
-            <li><a href="/MyBookings" onclick="route()">My Boookings</a></li>
-            <li><a href="/MyCars" onclick="route()">My Cars</a></li>
+            <!-- <li><a href="/MyBookings" onclick="route()">My Boookings</a></li> -->
+            <!-- <li><a href="/MyCars" onclick="route()">My Cars</a></li> -->
             <li><a href="/message" onclick="route()">Chat</a></li>
+            <!-- <li><button popovertarget="myPopover">Chat</button></li> -->
         </ul>
-        <!-- <div class="right-side-container">
-            <div class="profile-container">
-                
-                <div class="profile">
-                    <span id="username">Jamie Smith</span>
-                </div>
-            </div>
-
-            <div class="button-container">
-                <button class="login"><a href="/login" onclick="route()">Log In</a></button>
-                <button class="signup"><a href="/signup" onclick="route()">Signup</a></button>
-            </div>
-
-            <div class="menu-icon">
-                <i class="fa-solid fa-bars" onclick="toggleMenu()"></i>
-            </div>
-        </div> -->
         <div class="right-side-container">
             <?php if ($isLoggedIn): ?>
                 <?php
@@ -75,6 +60,23 @@ include_once "php/config.php";
 
     </div>
 
+    <div popover id="myPopover" class="wrapper">
+        <section class="users">
+            <header>
+                <h1>INBOX</h1>
+            </header>
+            <div class="search">
+                <span class="text">Select an user to start chat</span>
+                <input type="text" placeholder="Enter name to search...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+            <div class="users-list">
+
+            </div>
+        </section>
+
+    </div>
+
     <!-- <footer>
         asdf
     </footer> -->
@@ -92,6 +94,7 @@ include_once "php/config.php";
         }
     </script>
 
+    <script src="javascript/users.js"></script>
     <script src="javascript/router."></script>
     <script src="https://kit.fontawesjsome.com/f8e1a90484.js" crossorigin="anonymous"></script>
 </body>
