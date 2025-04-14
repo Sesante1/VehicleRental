@@ -36,6 +36,7 @@ if (!empty($fname) && !empty($lname) && !empty($email) && !empty($password)) {
                                 if (mysqli_num_rows($select_sql2) > 0) {
                                     $result = mysqli_fetch_assoc($select_sql2);
                                     $_SESSION['unique_id'] = $result['unique_id'];
+                                    $_SESSION['user_id'] = $result['user_id'];
                                     echo "success";
                                 } else {
                                     echo "This email address not Exist!";

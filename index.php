@@ -1,6 +1,6 @@
 <?php
 session_start();
-$isLoggedIn = isset($_SESSION['unique_id']);
+$isLoggedIn = isset($_SESSION['user_id']);
 include_once "php/config.php";
 ?>
 
@@ -34,7 +34,7 @@ include_once "php/config.php";
         <div class="right-side-container">
             <?php if ($isLoggedIn): ?>
                 <?php
-                $sql = mysqli_query($conn, "SELECT * FROM users WHERE unique_id = {$_SESSION['unique_id']}");
+                $sql = mysqli_query($conn, "SELECT * FROM users WHERE user_id = {$_SESSION['user_id']}");
                 $row = mysqli_fetch_assoc($sql);
                 ?>
                 <div class="profile-container">

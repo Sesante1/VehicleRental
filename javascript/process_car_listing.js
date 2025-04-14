@@ -1,4 +1,79 @@
 (function () {
+    function initAddCarForm() {
+        const formId = 'AddCarForm';
+        const addCarForm = document.getElementById(formId);
+
+        if (!addCarForm) return; // Exit if form not on this page
+
+        const handleSubmit = function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(addCarForm);
+            const imageData = window.carImageData || [];
+
+            imageData.forEach((item, index) => {
+                if (item !== null) {
+                    formData.append(`carImage${index}`, item.file);
+                }
+            });
+
+            const validImages = imageData.filter(item => item !== null);
+
+            if (validImages.length < 3) {
+                alert('Please upload at least 3 images of your car.');
+                return;
+            }
+
+            fetch('php/process_car_listing.php', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => {
+                    if (!response.ok) throw new Error('Network error');
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        alert('Your car has been listed successfully!');
+                        window.location.href = '/listCar';
+                    } else {
+                        alert('Error: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while saving your listing. Please try again.');
+                });
+        };
+
+        addCarForm.addEventListener('submit', handleSubmit);
+
+        // Return cleanup
+        return function cleanup() {
+            addCarForm.removeEventListener('submit', handleSubmit);
+            console.log('AddCarForm unmounted and cleaned up');
+        };
+    }
+
+    // Hook into SPA router or page switch logic
+    // Run init manually when you load the AddCar page/component
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.addCarFormCleanup = initAddCarForm();
+        });
+    } else {
+        window.addCarFormCleanup = initAddCarForm();
+    }
+
+    // Example cleanup trigger (you should call this on route change if needed)
+    window.addEventListener('beforeunload', function () {
+        if (typeof window.addCarFormCleanup === 'function') {
+            window.addCarFormCleanup();
+        }
+    });
+})();
+
+(function () {
     // Wait for DOM content to be loaded
     function initCarUploader() {
         const moduleId = 'car-uploader';
@@ -12,11 +87,12 @@
         const addImageBtn = document.getElementById('car-add-image-btn');
         const fileInput = document.getElementById('car-file-input');
         const uploadCount = document.getElementById('car-upload-count');
-        const uploadButton = document.getElementById('car-upload-button');
 
         let imageCount = 0;
         const minRequiredImages = 3;
-        let imageData = []; // Store the actual files for submission
+
+        // Use a global variable to store image data
+        window.carImageData = [];
 
         // Handle add image button click
         function handleAddImageClick() {
@@ -46,8 +122,8 @@
                     container.appendChild(img);
 
                     // Store file data for later submission
-                    const fileIndex = imageData.length;
-                    imageData.push({
+                    const fileIndex = window.carImageData.length;
+                    window.carImageData.push({
                         file: file,
                         previewUrl: e.target.result
                     });
@@ -60,7 +136,7 @@
                     deleteBtn.addEventListener('click', function () {
                         container.remove();
                         // Mark as deleted rather than splicing to maintain indexes
-                        imageData[fileIndex] = null;
+                        window.carImageData[fileIndex] = null;
                         imageCount--;
                         updateImageCount();
                     });
@@ -82,56 +158,16 @@
 
         function updateImageCount() {
             uploadCount.textContent = `${imageCount} of ${minRequiredImages} images selected`;
-
-            if (imageCount >= minRequiredImages) {
-                uploadButton.disabled = false;
-            } else {
-                uploadButton.disabled = true;
-            }
-        }
-
-        // Handle upload button click
-        function handleUploadClick() {
-            // Filter out deleted images
-            const filesToUpload = imageData.filter(item => item !== null);
-
-            // In a real SPA, you might use fetch or axios here
-            console.log('Uploading files:', filesToUpload);
-            alert(`${imageCount} images ready to upload. In a real application, these would be sent to a server.`);
-
-            // Example of what a real upload might look like:
-            /*
-            const formData = new FormData();
-            filesToUpload.forEach((item, index) => {
-                formData.append(`carImage${index}`, item.file);
-            });
-            
-            fetch('/api/upload-car-images', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Success:', data);
-                // Navigate to next step using SPA router
-                // router.navigate('/listing-details');
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-            */
         }
 
         // Add event listeners
         addImageBtn.addEventListener('click', handleAddImageClick);
         fileInput.addEventListener('change', handleFileChange);
-        uploadButton.addEventListener('click', handleUploadClick);
 
         // Store the cleanup function to remove event listeners when component is unmounted
         return function cleanup() {
             addImageBtn.removeEventListener('click', handleAddImageClick);
             fileInput.removeEventListener('change', handleFileChange);
-            uploadButton.removeEventListener('click', handleUploadClick);
             console.log('Car uploader component unmounted and cleaned up');
         };
     }
@@ -144,21 +180,10 @@
         const cleanup = initCarUploader();
 
         // For SPA route changes - example of how to clean up when navigating away
-        // This would typically be handled by your SPA framework
         window.addEventListener('beforeunload', function () {
             if (typeof cleanup === 'function') {
                 cleanup();
             }
         });
-
-        // Example of how to hook into SPA navigation events
-        // Replace with your actual SPA router events
-        /*
-        document.addEventListener('spa:beforeRouteChange', function() {
-            if (typeof cleanup === 'function') {
-                cleanup();
-            }
-        });
-        */
     }
 })();
