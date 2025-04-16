@@ -22,6 +22,7 @@
         "/message": "users.php",
         "/chat": "chat.php",
         "/listCar": "/pages/list-your-car.php",
+        "/car-details": "/pages/car_details_booking.php",
         "404": "/pages/404.php",
     };
 

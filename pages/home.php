@@ -1,3 +1,31 @@
+<?php
+require '../php/config.php'; // Include DB connection
+
+$sql = "SELECT 
+            cars.id AS car_id,
+            cars.user_id,
+            cars.make,
+            cars.model,
+            cars.daily_rate,
+            cars.location,
+            cars.transmission,
+            cars.seats,
+            car_images.image_path
+        FROM cars
+        LEFT JOIN car_images ON cars.id = car_images.car_id AND car_images.is_primary = 1
+        WHERE cars.is_active = 1";
+
+$result = mysqli_query($conn, $sql);
+
+$cars = [];
+if ($result && mysqli_num_rows($result) > 0) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        $cars[] = $row;
+    }
+}
+?>
+
+
 <html lang="en">
 
 <head>
@@ -13,7 +41,7 @@
     <div class="home-container">
         <header>
             <h1>Find the perfect car to rent</h1>
-            <p>Choose from thousands of cars shared by local hosts across</p>
+            <p style="color: gray;">Choose from thousands of cars shared by local hosts across</p>
         </header>
 
         <div class="search-car-container">
@@ -36,147 +64,28 @@
             </form>
         </div>
         <div class="car-container">
-            <div class="car-card">
-                <div class="car-image">
-                    <img src="php/car-images/5/67fd3c38b67ff.avif" alt="Tesla Model 3">
-                    <div class="price-tag">₱85/day</div>
-                </div>
-                <div class="car-info">
-                    <div class="car-title-container">
-                        <h2 class="car-title">Tesla Model 3</h2>
-                        <div class="rating">
-                            <span class="star">★</span>
-                            <span class="score">4.9</span>
+            <?php foreach ($cars as $car): ?>
+                <a href="/car-details?id=<?= htmlspecialchars($car['car_id']) ?>" class="car-link">
+                    <div class="car-card">
+                        <div class="car-image">
+                            <img src="/php/car-images/<?= htmlspecialchars($car['car_id']) ?>/<?= htmlspecialchars($car['image_path']) ?>" alt="<?= htmlspecialchars($car['make'] . ' ' . $car['model']) ?>">
+                            <div class="price-tag">₱<?= htmlspecialchars($car['daily_rate']) ?>/day</div>
+                        </div>
+                        <div class="car-info">
+                            <div class="car-title-container">
+                                <h2 class="car-title"><?= htmlspecialchars($car['make']) . ' ' . htmlspecialchars($car['model']) ?></h2>
+                            </div>
+                            <p class="location"><i class="fa-solid fa-location-dot"></i> <?= htmlspecialchars($car['location']) ?></p>
+                            <div class="car-details">
+                                <span><i class="fa-solid fa-users"></i> <?= htmlspecialchars($car['seats']) ?> seats</span>
+                                <span><i class="fa-solid fa-gear"></i> <?= htmlspecialchars($car['transmission']) ?></span>
+                            </div>
                         </div>
                     </div>
-                    <p class="location"><i class="fa-solid fa-location-dot"></i>San Francisco, CA</p>
-                    <div class="car-details">
-                        <span><i class="fa-solid fa-users"></i>5 seats</span>
-                        <span><i class="fa-solid fa-gear"></i>Automatic</span>
-                    </div>
-                </div>
-            </div>
-            <div class="car-card">
-                <div class="car-image">
-                    <img src="php/car-images/5/67fd3c38b67ff.avif" alt="Tesla Model 3">
-                    <div class="price-tag">₱85/day</div>
-                </div>
-                <div class="car-info">
-                    <div class="car-title-container">
-                        <h2 class="car-title">Tesla Model 3</h2>
-                        <div class="rating">
-                            <span class="star">★</span>
-                            <span class="score">4.9</span>
-                        </div>
-                    </div>
-                    <p class="location"><i class="fa-solid fa-location-dot"></i>San Francisco, CA</p>
-                    <div class="car-details">
-                        <span><i class="fa-solid fa-users"></i>5 seats</span>
-                        <span><i class="fa-solid fa-gear"></i>Automatic</span>
-                    </div>
-                </div>
-            </div>
-            <div class="car-card">
-                <div class="car-image">
-                    <img src="php/car-images/5/67fd3c38b67ff.avif" alt="Tesla Model 3">
-                    <div class="price-tag">₱85/day</div>
-                </div>
-                <div class="car-info">
-                    <div class="car-title-container">
-                        <h2 class="car-title">Tesla Model 3</h2>
-                        <div class="rating">
-                            <span class="star">★</span>
-                            <span class="score">4.9</span>
-                        </div>
-                    </div>
-                    <p class="location"><i class="fa-solid fa-location-dot"></i>San Francisco, CA</p>
-                    <div class="car-details">
-                        <span><i class="fa-solid fa-users"></i>5 seats</span>
-                        <span><i class="fa-solid fa-gear"></i>Automatic</span>
-                    </div>
-                </div>
-            </div>
-            <div class="car-card">
-                <div class="car-image">
-                    <img src="php/car-images/5/67fd3c38b67ff.avif" alt="Tesla Model 3">
-                    <div class="price-tag">₱85/day</div>
-                </div>
-                <div class="car-info">
-                    <div class="car-title-container">
-                        <h2 class="car-title">Tesla Model 3</h2>
-                        <div class="rating">
-                            <span class="star">★</span>
-                            <span class="score">4.9</span>
-                        </div>
-                    </div>
-                    <p class="location"><i class="fa-solid fa-location-dot"></i>San Francisco, CA</p>
-                    <div class="car-details">
-                        <span><i class="fa-solid fa-users"></i>5 seats</span>
-                        <span><i class="fa-solid fa-gear"></i>Automatic</span>
-                    </div>
-                </div>
-            </div>
-            <div class="car-card">
-                <div class="car-image">
-                    <img src="php/car-images/5/67fd3c38b67ff.avif" alt="Tesla Model 3">
-                    <div class="price-tag">₱85/day</div>
-                </div>
-                <div class="car-info">
-                    <div class="car-title-container">
-                        <h2 class="car-title">Tesla Model 3</h2>
-                        <div class="rating">
-                            <span class="star">★</span>
-                            <span class="score">4.9</span>
-                        </div>
-                    </div>
-                    <p class="location"><i class="fa-solid fa-location-dot"></i>San Francisco, CA</p>
-                    <div class="car-details">
-                        <span><i class="fa-solid fa-users"></i>5 seats</span>
-                        <span><i class="fa-solid fa-gear"></i>Automatic</span>
-                    </div>
-                </div>
-            </div>
-            <div class="car-card">
-                <div class="car-image">
-                    <img src="php/car-images/5/67fd3c38b67ff.avif" alt="Tesla Model 3">
-                    <div class="price-tag">₱85/day</div>
-                </div>
-                <div class="car-info">
-                    <div class="car-title-container">
-                        <h2 class="car-title">Tesla Model 3</h2>
-                        <div class="rating">
-                            <span class="star">★</span>
-                            <span class="score">4.9</span>
-                        </div>
-                    </div>
-                    <p class="location"><i class="fa-solid fa-location-dot"></i>San Francisco, CA</p>
-                    <div class="car-details">
-                        <span><i class="fa-solid fa-users"></i>5 seats</span>
-                        <span><i class="fa-solid fa-gear"></i>Automatic</span>
-                    </div>
-                </div>
-            </div>
-            <div class="car-card">
-                <div class="car-image">
-                    <img src="php/car-images/5/67fd3c38b67ff.avif" alt="Tesla Model 3">
-                    <div class="price-tag">₱85/day</div>
-                </div>
-                <div class="car-info">
-                    <div class="car-title-container">
-                        <h2 class="car-title">Tesla Model 3</h2>
-                        <div class="rating">
-                            <span class="star">★</span>
-                            <span class="score">4.9</span>
-                        </div>
-                    </div>
-                    <p class="location"><i class="fa-solid fa-location-dot"></i>San Francisco, CA</p>
-                    <div class="car-details">
-                        <span><i class="fa-solid fa-users"></i>5 seats</span>
-                        <span><i class="fa-solid fa-gear"></i>Automatic</span>
-                    </div>
-                </div>
-            </div>
+                </a>
+            <?php endforeach; ?>
         </div>
+
     </div>
 </body>
 
