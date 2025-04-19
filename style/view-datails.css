@@ -185,7 +185,7 @@
     display: block;
     width: 100%;
     padding: 12px;
-    background-color: #007bff;
+    background-color: #2054dc;
     color: white;
     border: none;
     border-radius: 5px;
@@ -196,7 +196,7 @@
 }
 
 .book-button:hover {
-    background-color: #0069d9;
+    opacity: 0.9;
 }
 
 .reviews-section {
@@ -316,5 +316,10 @@
     /* diri */
     max-width: 750px;
     height: max-content;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-between;
 }
 

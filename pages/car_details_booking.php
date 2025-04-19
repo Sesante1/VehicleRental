@@ -81,7 +81,7 @@ $conn->close();
             <div class="car-rating">
                 <div class="stars">
                     <i class="fa-solid fa-star"><span>4.7 (19 reviews)</span></i>
-                    
+
                 </div>
                 <div class="location-info">
                     <i class="fa-solid fa-location-dot"></i> <?= htmlspecialchars($car['location']) ?>
@@ -176,8 +176,19 @@ $conn->close();
                         <label for="return_date">Return Date</label>
                         <input type="date" id="return_date" name="return_date" required>
                     </div>
+                    <div id="price-calculation">
+                        <div class="total-container" id="total-container" style="display: none;">
+                            <div class="flex">
+                                <span id="rate-calculation">₱<?= htmlspecialchars($car['daily_rate']) ?> x <span id="days-count">0</span> days</span>
+                                <span id="subtotal">₱0</span>
+                            </div>
+                            <div class="flex">
+                                <span>Total</span>
+                                <span id="total-amount">₱0</span>
+                            </div>
+                        </div>
+                    </div>
                     <button type="submit" class="book-button">Reserve Now</button>
-                    <p>You won't be charged yet</p>
                 </form>
             </div>
         </div>
@@ -185,40 +196,64 @@ $conn->close();
 
     <script src="/js/scripts.js"></script>
     <script>
-        function changeMainImage(src, index) {
-            // Update main image
-            document.getElementById('main-car-image').src = src;
+        window.carDailyRate = <?= json_encode($car['daily_rate']) ?>;
 
-            // Update active thumbnail
-            const thumbnails = document.querySelectorAll('.thumbnail');
-            thumbnails.forEach(thumb => {
-                thumb.classList.remove('active');
-            });
+        (function() {
+            function initPriceCalculator() {
+                const moduleId = 'price-calculation';
 
-            thumbnails[index].classList.add('active');
-        }
+                if (!document.getElementById(moduleId)) return;
 
-        // Optional: Add keyboard navigation for images
-        document.addEventListener('keydown', function(event) {
-            const thumbnails = document.querySelectorAll('.thumbnail');
-            if (thumbnails.length <= 1) return;
+                const pickupDateInput = document.getElementById('pickup_date');
+                const returnDateInput = document.getElementById('return_date');
+                const totalContainer = document.getElementById('total-container');
+                const daysCountElement = document.getElementById('days-count');
+                const subtotalElement = document.getElementById('subtotal');
+                const totalAmountElement = document.getElementById('total-amount');
+                const dailyRate = window.carDailyRate || 0;
 
-            const currentActive = document.querySelector('.thumbnail.active');
-            let currentIndex = parseInt(currentActive.getAttribute('data-index'));
+                function updatePriceCalculation() {
+                    if (pickupDateInput.value && returnDateInput.value) {
+                        const pickupDate = new Date(pickupDateInput.value);
+                        const returnDate = new Date(returnDateInput.value);
 
-            if (event.key === 'ArrowRight') {
-                // Next image
-                currentIndex = (currentIndex + 1) % thumbnails.length;
-            } else if (event.key === 'ArrowLeft') {
-                // Previous image
-                currentIndex = (currentIndex - 1 + thumbnails.length) % thumbnails.length;
-            } else {
-                return;
+                        if (returnDate > pickupDate) {
+                            const diffTime = Math.abs(returnDate - pickupDate);
+                            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+                            daysCountElement.textContent = diffDays;
+                            const subtotal = diffDays * dailyRate;
+                            subtotalElement.textContent = '₱' + subtotal.toLocaleString();
+                            totalAmountElement.textContent = '₱' + subtotal.toLocaleString();
+                            totalContainer.style.display = 'block';
+                        } else {
+                            totalContainer.style.display = 'none';
+                        }
+                    } else {
+                        totalContainer.style.display = 'none';
+                    }
+                }
+
+                pickupDateInput.addEventListener('change', updatePriceCalculation);
+                returnDateInput.addEventListener('change', updatePriceCalculation);
+                updatePriceCalculation();
+
+                return function cleanup() {
+                    pickupDateInput.removeEventListener('change', updatePriceCalculation);
+                    returnDateInput.removeEventListener('change', updatePriceCalculation);
+                };
             }
 
-            const imgSrc = thumbnails[currentIndex].querySelector('img').src;
-            changeMainImage(imgSrc, currentIndex);
-        });
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', () => {
+                    const cleanup = initPriceCalculator();
+                    window.addEventListener('beforeunload', () => typeof cleanup === 'function' && cleanup());
+                });
+            } else {
+                const cleanup = initPriceCalculator();
+                window.addEventListener('beforeunload', () => typeof cleanup === 'function' && cleanup());
+            }
+        })();
     </script>
 </body>
 

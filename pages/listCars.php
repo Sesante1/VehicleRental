@@ -40,7 +40,6 @@ include_once "../php/config.php";
             </div>
         </div>
 
-
         <div class="myCar content_box">
             <div id="content1" class="content active">
                 <h3>My Bookings</h3>

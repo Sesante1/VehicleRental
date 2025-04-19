@@ -1,7 +1,7 @@
-<?php
-require '../php/config.php'; // Include DB connection
+<!-- <?php
+        require '../php/config.php'; // Include DB connection
 
-$sql = "SELECT 
+        $sql = "SELECT 
             cars.id AS car_id,
             cars.user_id,
             cars.make,
@@ -15,16 +15,15 @@ $sql = "SELECT
         LEFT JOIN car_images ON cars.id = car_images.car_id AND car_images.is_primary = 1
         WHERE cars.is_active = 1";
 
-$result = mysqli_query($conn, $sql);
+        $result = mysqli_query($conn, $sql);
 
-$cars = [];
-if ($result && mysqli_num_rows($result) > 0) {
-    while ($row = mysqli_fetch_assoc($result)) {
-        $cars[] = $row;
-    }
-}
-?>
-
+        $cars = [];
+        if ($result && mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $cars[] = $row;
+            }
+        }
+        ?> -->
 
 <html lang="en">
 
@@ -63,7 +62,7 @@ if ($result && mysqli_num_rows($result) > 0) {
                 </div>
             </form>
         </div>
-        <div class="car-container">
+        <!-- <div class="car-container">
             <?php foreach ($cars as $car): ?>
                 <a href="/car-details?id=<?= htmlspecialchars($car['car_id']) ?>" class="car-link">
                     <div class="car-card">
@@ -84,9 +83,60 @@ if ($result && mysqli_num_rows($result) > 0) {
                     </div>
                 </a>
             <?php endforeach; ?>
+        </div> -->
+        <div class="car-container" id="car-container">
+
         </div>
 
     </div>
+    <script>
+        function loadCars() {
+            fetch('/php/get-cars.php')
+                .then(response => response.json())
+                .then(cars => {
+                    const container = document.getElementById('car-container');
+
+                    // Create a temporary element to avoid flickering
+                    const tempContainer = document.createElement('div');
+
+                    cars.forEach(car => {
+                        const carCard = document.createElement('a');
+                        carCard.href = `/car-details?id=${car.car_id}`;
+                        carCard.className = 'car-link';
+                        carCard.innerHTML = `
+                    <div class="car-card">
+                        <div class="car-image">
+                            <img src="/php/car-images/${car.car_id}/${car.image_path}" alt="${car.make} ${car.model}">
+                            <div class="price-tag">₱${car.daily_rate}/day</div>
+                        </div>
+                        <div class="car-info">
+                            <div class="car-title-container">
+                                <h2 class="car-title">${car.make} ${car.model}</h2>
+                            </div>
+                            <p class="location"><i class="fa-solid fa-location-dot"></i> ${car.location}</p>
+                            <div class="car-details">
+                                <span><i class="fa-solid fa-users"></i> ${car.seats} seats</span>
+                                <span><i class="fa-solid fa-gear"></i> ${car.transmission}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                        tempContainer.appendChild(carCard);
+                    });
+
+                    // Replace content with the new one
+                    container.innerHTML = tempContainer.innerHTML;
+                })
+                .catch(error => {
+                    console.error('Error loading cars:', error);
+                });
+        }
+
+        loadCars();
+
+        setInterval(loadCars, 500);
+    </script>
+
 </body>
 
 </html>

@@ -74,19 +74,19 @@
             <h4>Features</h4>
             <div class="flex">
                 <div>
-                    <input type="checkbox" id="air_condition" name="air_condition" value="1">
+                    <input type="checkbox" id="air_condition" name="air-condition" value="1">
                     <label for="air_condition"> &nbsp; Air Conditioning </label><br>
-                    <input type="checkbox" id="navigation_system" name="navigation_system" value="1">
+                    <input type="checkbox" id="navigation_system" name="navigation-system" value="1">
                     <label for="navigation_system"> &nbsp; Navigation System </label><br>
-                    <input type="checkbox" id="heated_seats" name="heated_seats" value="1">
+                    <input type="checkbox" id="heated_seats" name="heated-seats" value="1">
                     <label for="heated_seats"> &nbsp; Heated Seats </label><br>
-                    <input type="checkbox" id="apple_carplay" name="apple_carplay" value="1">
+                    <input type="checkbox" id="apple_carplay" name="apple-carplay" value="1">
                     <label for="apple_carplay"> &nbsp; Apple CarPlay </label><br>
                 </div>
                 <div>
                     <input type="checkbox" id="bluetooth" name="bluetooth" value="1">
                     <label for="bluetooth"> &nbsp; Bluetooth</label><br>
-                    <input type="checkbox" id="leather_seats" name="leather_seats" value="1">
+                    <input type="checkbox" id="leather_seats" name="leather-seats" value="1">
                     <label for="leather_seats"> &nbsp; Leather Seats</label><br>
                     <input type="checkbox" id="camera" name="camera" value="1">
                     <label for="camera"> &nbsp; Backup Camera</label><br>
@@ -94,13 +94,13 @@
                     <label for="android"> &nbsp; Android Auto</label><br>
                 </div>
                 <div>
-                    <input type="checkbox" id="cruise_control" name="cruise_control" value="1">
+                    <input type="checkbox" id="cruise_control" name="cruise-control" value="1">
                     <label for="cruise_control"> &nbsp; Cruise Control</label><br>
                     <input type="checkbox" id="sunroof" name="sunroof" value="1">
                     <label for="sunroof"> &nbsp; Sunroof</label><br>
                     <input type="checkbox" id="keyless" name="keyless" value="1">
                     <label for="keyless"> &nbsp; Keyless Entry</label><br>
-                    <input type="checkbox" id="sound_system" name="sound_system" value="1">
+                    <input type="checkbox" id="sound_system" name="sound-system" value="1">
                     <label for="sound_system"> &nbsp; Premium Sound System</label><br>
                 </div>
             </div>
